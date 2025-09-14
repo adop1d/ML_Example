@@ -19,14 +19,26 @@ with urlopen('https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iri
 iris_data.columns = ['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm', 'Species']
 y = iris_data['Species']
 X = iris_data.drop(columns=['Species'])
-#split the data into features(x) and labels(y)
+#split the data into training and testing sets
+X_train , X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Standardize the feature values
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 print(X.head())
 
+#create and train the model
 model = LogisticRegression()
-model.fit(X.values, y)
+model.fit(X_train_scaled, y_train)
+
+#evaluate the model on the test set
+y_pred = model.predict(X_test_scaled)
+accuracy = accuracy_score(y_test, y_pred)
 
 predictions = model.predict([[5.1, 3.5, 1.4, 0.2], [6.7, 3.1, 4.7, 1.5], [7.2, 3.6, 6.1, 2.5]])
+
 print(predictions)
+print(f"Model accuracy: {accuracy*100:.2f}%")
 
 
 
