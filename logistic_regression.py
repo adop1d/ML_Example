@@ -36,4 +36,13 @@ def plot_logistic_regression(slope=2.0, intercept=-1.0,threshold=0.5):
     ax3.legend()
 
     plt.suptitle('Logistic Regression Visualization')
-    plt.show()
+
+#create sliders for slope, intercept, and threshold
+slope_slider = FloatSlider(value=2.0, min=-5.0, max=5.0, step=0.1, description='Slope:')
+intercept_slider = FloatSlider(value=-1.0, min=-5.0, max=5.0, step=0.1, description='Intercept:')
+threshold_slider = FloatSlider(value=0.5, min=0.0, max=1.0, step=0.01, description='Threshold:')
+
+#use interact to create interactive plot
+interact(plot_logistic_regression, slope=slope_slider, intercept=intercept_slider, threshold=threshold_slider)
+
+plt.show()
